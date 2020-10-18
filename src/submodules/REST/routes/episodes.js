@@ -11,7 +11,7 @@ import {File} from '../../../models/file';
 
 const Op = sequelize.Op;
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     // Endpoint to get a list of episodes from all series
     server.get('/episodes/list/:sorting', authMiddleWare.requiresAuth, async function (req, res, next) {
         let limit = 20;
@@ -65,7 +65,7 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Episode not found'));
         }
 
-        let imagePath = oblecto.artworkUtils.episodeBannerPath(episode, req.params.size || 'medium');
+        let imagePath = owoblecto.artworkUtils.episodeBannerPath(episode, req.params.size || 'medium');
 
         fs.createReadStream(imagePath)
             .on('error', ()  => {
@@ -84,7 +84,7 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Episode does not exist'));
         }
 
-        let thumbnailPath = this.oblecto.artworkUtils.episodeBannerPath(episode);
+        let thumbnailPath = this.owoblecto.artworkUtils.episodeBannerPath(episode);
 
         if (req.files.length < 1) {
             return next(new errors.MissingParameter('Image file is missing'));
@@ -109,11 +109,11 @@ export default (server, oblecto) => {
             fs.copyFile(uploadPath, thumbnailPath, (err) => {
                 if (err) throw err;
 
-                for (let size of Object.keys(this.oblecto.config.artwork.poster)) {
-                    this.oblecto.queue.pushJob('rescaleImage', {
-                        from: this.oblecto.artworkUtils.episodeBannerPath(episode),
-                        to: this.oblecto.artworkUtils.episodeBannerPath(episode, size),
-                        width: this.oblecto.config.artwork.poster[size]
+                for (let size of Object.keys(this.owoblecto.config.artwork.poster)) {
+                    this.owoblecto.queue.pushJob('rescaleImage', {
+                        from: this.owoblecto.artworkUtils.episodeBannerPath(episode),
+                        to: this.owoblecto.artworkUtils.episodeBannerPath(episode, size),
+                        width: this.owoblecto.config.artwork.poster[size]
                     });
                 }
 
@@ -269,7 +269,7 @@ export default (server, oblecto) => {
     server.get('/episodes/next', authMiddleWare.requiresAuth, async function (req, res, next) {
         // Next episodes currently doesn't work on sqlite as the LPAD function doesn't exist
         // Todo: Fix next episodes endpoint to support sqlite
-        if (oblecto.config.database.dialect === 'sqlite')
+        if (owoblecto.config.database.dialect === 'sqlite')
             return next(new errors.NotImplementedError('Next episode is not supported when using sqlite (yet)'));
 
         // search for attributes

@@ -8,6 +8,6 @@ RUN npm install
 RUN npm i sqlite3
 COPY . .
 RUN npm run prepare
-RUN mkdir /etc/oblecto
+RUN mkdir /etc/owoblecto
 EXPOSE 8080 9131 9132
-CMD [ "node", "dist/bin/oblecto", "start" ]
+CMD [ "node", "dist/bin/owoblecto", "start" ]

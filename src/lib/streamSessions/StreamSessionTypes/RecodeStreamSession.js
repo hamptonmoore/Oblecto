@@ -3,8 +3,8 @@ import ffmpeg from '../../../submodules/ffmpeg';
 import logger from '../../../submodules/logger';
 
 export default class RecodeStreamSession extends StreamSession {
-    constructor(file, options, oblecto) {
-        super(file, options, oblecto);
+    constructor(file, options, owoblecto) {
+        super(file, options, owoblecto);
 
         if (this.videoCodec === this.file.videoCodec || this.file.videoCodec in this.targetVideoCodecs) {
             this.videoCodec = 'copy';
@@ -35,8 +35,8 @@ export default class RecodeStreamSession extends StreamSession {
             '-copyts',
         ];
 
-        if (this.oblecto.config.transcoding.hardwareAcceleration) {
-            inputOptions.push('-hwaccel ' + this.oblecto.config.transcoding.hardwareAccelerator);
+        if (this.owoblecto.config.transcoding.hardwareAcceleration) {
+            inputOptions.push('-hwaccel ' + this.owoblecto.config.transcoding.hardwareAccelerator);
 
             // The Nvidia NVENC encoder doesn't support 10 bit encoding, so we need to force 8 bit
             // if the cuda accelerator has been selected
@@ -45,7 +45,7 @@ export default class RecodeStreamSession extends StreamSession {
             // Depending on the input color range, this may result in washed out colors since the color range is kept
             // but considered to be a full range color space even if the input range is limited.
 
-            if (this.oblecto.config.transcoding.hardwareAccelerator === 'cuda') {
+            if (this.owoblecto.config.transcoding.hardwareAccelerator === 'cuda') {
                 outputOptions.push('-pix_fmt yuv420p');
             }
         }

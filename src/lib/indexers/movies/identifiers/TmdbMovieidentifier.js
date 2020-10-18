@@ -16,7 +16,7 @@ export default class TmdbMovieIdentifier extends MovieIdentifier{
             query.primary_release_year = identification.year;
         }
 
-        let res = await this.oblecto.tmdb.searchMovie(query);
+        let res = await this.owoblecto.tmdb.searchMovie(query);
 
         let identifiedMovie = res.results[0];
 

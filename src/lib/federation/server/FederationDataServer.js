@@ -5,6 +5,6 @@ export default class FederationMediaServer extends FederationServer {
     secureConnectionHandler(socket) {
         super.secureConnectionHandler(socket);
 
-        let connection = new FederationDataServerConnection(this.oblecto, socket);
+        let connection = new FederationDataServerConnection(this.owoblecto, socket);
     }
 }

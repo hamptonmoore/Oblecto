@@ -3,11 +3,11 @@ import errors from 'restify-errors';
 import bcrypt from 'bcrypt';
 import {User} from '../../../models/user';
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.post('/auth/login', async function (req, res, next) {
         if (!req.params.username)
             return next(new errors.BadRequestError('Username is missing'));
-        if (!req.params.password && !oblecto.config.authentication.allowPasswordlessLogin)
+        if (!req.params.password && !owoblecto.config.authentication.allowPasswordlessLogin)
 
             return next(new errors.BadRequestError('Password is missing'));
 
@@ -22,7 +22,7 @@ export default (server, oblecto) => {
         if (!user)
             return next(new errors.UnauthorizedError('Username is incorrect'));
 
-        let allowLogin = oblecto.config.authentication.allowPasswordlessLogin;
+        let allowLogin = owoblecto.config.authentication.allowPasswordlessLogin;
 
         if (user.password)
             allowLogin = await bcrypt.compare(req.params.password, user.password);
@@ -37,7 +37,7 @@ export default (server, oblecto) => {
             email: user.email
         };
 
-        let accessToken = jwt.sign(tokenPayload, oblecto.config.authentication.secret);
+        let accessToken = jwt.sign(tokenPayload, owoblecto.config.authentication.secret);
 
         res.send({accessToken});
     });

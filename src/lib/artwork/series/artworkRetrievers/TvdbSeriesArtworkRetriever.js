@@ -1,8 +1,8 @@
 import DebugExtendableError from '../../../errors/DebugExtendableError';
 
 export default class TvdbSeriesArtworkRetriever {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -13,7 +13,7 @@ export default class TvdbSeriesArtworkRetriever {
     async retrieveEpisodeBanner(episode) {
         if (!episode.tvdbid) throw new DebugExtendableError(`TVDB Episode banner retriever failed for ${episode.episodeName}`);
 
-        let data = await this.oblecto.tvdb.getEpisodeById(episode.tvdbid);
+        let data = await this.owoblecto.tvdb.getEpisodeById(episode.tvdbid);
 
         return `https://thetvdb.com/banners/_cache/${data.filename}`;
     }
@@ -26,7 +26,7 @@ export default class TvdbSeriesArtworkRetriever {
     async retrieveSeriesPoster(series) {
         if (!series.tvdbid) throw new DebugExtendableError(`TVDB Series poster retriever failed for ${series.seriesName}`);
 
-        let data = await this.oblecto.tvdb.getSeriesPosters(series.tvdbid);
+        let data = await this.owoblecto.tvdb.getSeriesPosters(series.tvdbid);
 
         return `http://thetvdb.com/banners/${data[0].fileName}`;
     }

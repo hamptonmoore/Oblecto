@@ -7,23 +7,23 @@ import TmdbEpisodeRetriever from './informationRetrievers/TmdbEpisodeRetriever';
 export default class SeriesUpdater {
 
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         this.aggregateSeriesUpdateRetriever = new AggregateUpdateRetriever();
-        this.aggregateSeriesUpdateRetriever.loadRetriever(new TmdbSeriesRetriever(this.oblecto));
+        this.aggregateSeriesUpdateRetriever.loadRetriever(new TmdbSeriesRetriever(this.owoblecto));
 
         this.aggregateEpisodeUpdaterRetriever = new AggregateUpdateRetriever();
-        this.aggregateEpisodeUpdaterRetriever.loadRetriever(new TmdbEpisodeRetriever(this.oblecto));
+        this.aggregateEpisodeUpdaterRetriever.loadRetriever(new TmdbEpisodeRetriever(this.owoblecto));
 
-        // Register task availability to Oblecto queue
-        this.oblecto.queue.addJob('updateEpisode', async (job) => {
+        // Register task availability to owoblecto queue
+        this.owoblecto.queue.addJob('updateEpisode', async (job) => {
             await this.updateEpisode(job);
         });
 
-        this.oblecto.queue.addJob('updateSeries', async (job) => {
+        this.owoblecto.queue.addJob('updateSeries', async (job) => {
             await this.updateSeries(job);
         });
     }

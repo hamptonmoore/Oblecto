@@ -2,10 +2,10 @@ import {promises as fs} from 'fs';
 import axiosTimeout from '../../submodules/axiosTimeout';
 
 export default class Downloader {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
-        this.oblecto.queue.addJob('downloadFile', async (job) => {
+        this.owoblecto.queue.addJob('downloadFile', async (job) => {
             await Downloader.download(job.url, job.dest, job.overwrite);
         });
     }

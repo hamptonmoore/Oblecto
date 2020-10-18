@@ -1,7 +1,7 @@
 import restify from 'restify';
 import fs from 'fs';
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.get('/web/static/*', restify.plugins.serveStatic({
         directory: __dirname + '/../../../../Oblecto-Web/dist/',
     }));

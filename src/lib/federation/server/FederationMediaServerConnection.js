@@ -3,8 +3,8 @@ import {File} from '../../../models/file';
 import logger from '../../../submodules/logger';
 
 export default class FederationMediaServerConnection extends FederationServerConnection {
-    constructor(oblecto, socket) {
-        super(oblecto, socket);
+    constructor(owoblecto, socket) {
+        super(owoblecto, socket);
         this.fileId = null;
         this.fileInfo = null;
         this.offset = 0;
@@ -49,7 +49,7 @@ export default class FederationMediaServerConnection extends FederationServerCon
     async startStream() {
         if (!this.fileInfo) return;
 
-        let streamSession = this.oblecto.streamSessionController.newSession(this.fileInfo, {
+        let streamSession = this.owoblecto.streamSessionController.newSession(this.fileInfo, {
             streamType: 'recode',
 
             target: {

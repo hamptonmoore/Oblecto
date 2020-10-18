@@ -6,8 +6,8 @@ import logger from '../../submodules/logger';
 import HLSStreamer from './StreamSessionTypes/HLSStreamer';
 
 export default class StreamSessionController {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         this.sessions = {};
     }
@@ -33,27 +33,27 @@ export default class StreamSessionController {
 
     createSession(file, options) {
         if (file.host !== 'local') {
-            return new RecodeFederationStreamSession(file, options, this.oblecto);
+            return new RecodeFederationStreamSession(file, options, this.owoblecto);
         }
 
         if (options.streamType === 'hls') {
-            return new HLSStreamer(file, options, this.oblecto);
+            return new HLSStreamer(file, options, this.owoblecto);
         }
 
-        if (this.oblecto.config.transcoding.transcodeEverything) {
-            return new RecodeStreamSession(file, options, this.oblecto);
+        if (this.owoblecto.config.transcoding.transcodeEverything) {
+            return new RecodeStreamSession(file, options, this.owoblecto);
         }
 
         if (options.streamType === 'direct') {
-            return new DirectStreamSession(file, options, this.oblecto);
+            return new DirectStreamSession(file, options, this.owoblecto);
         }
 
         if (options.streamType === 'directhttp') {
-            return new DirectHttpStreamSession(file, options, this.oblecto);
+            return new DirectHttpStreamSession(file, options, this.owoblecto);
         }
 
         if (options.streamType === 'recode') {
-            return new RecodeStreamSession(file, options, this.oblecto);
+            return new RecodeStreamSession(file, options, this.owoblecto);
         }
     }
 

@@ -12,7 +12,7 @@ import {MovieSet} from '../../../models/movieSet';
 
 const Op = sequelize.Op;
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.get('/movies/list/:sorting', authMiddleWare.requiresAuth, async function (req, res, next) {
         let limit = 20;
         let page = 0;
@@ -106,7 +106,7 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Movie not found'));
         }
 
-        let posterPath = oblecto.artworkUtils.moviePosterPath(movie, req.params.size || 'medium');
+        let posterPath = owoblecto.artworkUtils.moviePosterPath(movie, req.params.size || 'medium');
 
         fs.createReadStream(posterPath)
             .on('error', () => {
@@ -125,7 +125,7 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Movie does not exist'));
         }
 
-        let posterPath = oblecto.artworkUtils.moviePosterPath(movie);
+        let posterPath = owoblecto.artworkUtils.moviePosterPath(movie);
 
         if (req.files.length < 1) {
             return next(new errors.MissingParameter('Image file is missing'));
@@ -149,11 +149,11 @@ export default (server, oblecto) => {
             fs.copyFile(uploadPath, posterPath, (err) => {
                 if (err) throw err;
 
-                for (let size of Object.keys(oblecto.config.artwork.poster)) {
-                    oblecto.queue.pushJob('rescaleImage', {
-                        from: oblecto.artworkUtils.moviePosterPath(movie),
-                        to: oblecto.artworkUtils.moviePosterPath(movie, size),
-                        width: oblecto.config.artwork.poster[size]
+                for (let size of Object.keys(owoblecto.config.artwork.poster)) {
+                    owoblecto.queue.pushJob('rescaleImage', {
+                        from: owoblecto.artworkUtils.moviePosterPath(movie),
+                        to: owoblecto.artworkUtils.moviePosterPath(movie, size),
+                        width: owoblecto.config.artwork.poster[size]
                     });
                 }
 
@@ -174,7 +174,7 @@ export default (server, oblecto) => {
             include: [File]
         });
 
-        let fanartPath = oblecto.artworkUtils.movieFanartPath(movie, 'large');
+        let fanartPath = owoblecto.artworkUtils.movieFanartPath(movie, 'large');
 
         fs.createReadStream(fanartPath)
             .on('error', () => {
@@ -192,7 +192,7 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Movie does not exist'));
         }
 
-        let fanartPath = oblecto.artworkUtils.movieFanartPath(movie);
+        let fanartPath = owoblecto.artworkUtils.movieFanartPath(movie);
 
         if (req.files.length < 1) {
             return next(new errors.MissingParameter('Image file is missing'));
@@ -217,11 +217,11 @@ export default (server, oblecto) => {
             fs.copyFile(uploadPath, fanartPath, (err) => {
                 if (err) throw err;
 
-                for (let size of Object.keys(oblecto.config.artwork.poster)) {
-                    oblecto.queue.pushJob('rescaleImage', {
-                        from: oblecto.artworkUtils.movieFanartPath(movie),
-                        to: oblecto.artworkUtils.movieFanartPath(movie, size),
-                        width: oblecto.config.artwork.poster[size]
+                for (let size of Object.keys(owoblecto.config.artwork.poster)) {
+                    owoblecto.queue.pushJob('rescaleImage', {
+                        from: owoblecto.artworkUtils.movieFanartPath(movie),
+                        to: owoblecto.artworkUtils.movieFanartPath(movie, size),
+                        width: owoblecto.config.artwork.poster[size]
                     });
                 }
 

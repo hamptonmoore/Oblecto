@@ -8,13 +8,13 @@ import logger from '../../../submodules/logger';
 export default class FederationClient{
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      * @param {string} server
      */
-    constructor(oblecto, server) {
-        this.oblecto = oblecto;
+    constructor(owoblecto, server) {
+        this.owoblecto = owoblecto;
         this.serverName = server;
-        this.host = oblecto.config.federation.servers[server].address;
+        this.host = owoblecto.config.federation.servers[server].address;
         this.port = 9131;
         this.isSecure = false;
         this.authenticated = false;
@@ -31,7 +31,7 @@ export default class FederationClient{
             host: this.host,
             port: this.port ,
 
-            ca: [readFileSync(this.oblecto.config.federation.servers[this.serverName].ca)]
+            ca: [readFileSync(this.owoblecto.config.federation.servers[this.serverName].ca)]
         });
 
         this.socket.on('data', chunk => this.dataHandler(chunk));
@@ -41,7 +41,7 @@ export default class FederationClient{
 
         if (!this.isSecure) await this.waitForSecure();
 
-        this.socket.write(`IAM:${this.oblecto.config.federation.uuid}\n`);
+        this.socket.write(`IAM:${this.owoblecto.config.federation.uuid}\n`);
 
         await this.waitForAuth();
     }
@@ -78,7 +78,7 @@ export default class FederationClient{
     }
 
     async challengeHandler(data) {
-        const pemKey = await fs.readFile(this.oblecto.config.federation.key);
+        const pemKey = await fs.readFile(this.owoblecto.config.federation.key);
         const key = NodeRSA(pemKey);
 
         const decrypted = key.decrypt(data, 'ascii');

@@ -1,14 +1,14 @@
 export default class TmdbMovieRetriever {
 
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     async retrieveInformation(movie) {
-        let movieInfo = await this.oblecto.tmdb.movieInfo({ id: movie.tmdbid });
+        let movieInfo = await this.owoblecto.tmdb.movieInfo({ id: movie.tmdbid });
 
         let data = {
             imdbid: movieInfo.imdb_id,

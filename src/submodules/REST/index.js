@@ -3,16 +3,16 @@ import routes from './routes';
 import corsMiddleware from 'restify-cors-middleware';
 import logger from '../logger';
 
-export default class OblectoAPI {
+export default class owoblectoAPI {
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         // Initialize REST based server
         this.server = restify.createServer({
-            'name': 'Oblecto'
+            'name': 'owoblecto'
         });
 
         // Allow remote clients to connect to the backend
@@ -30,10 +30,10 @@ export default class OblectoAPI {
         this.server.use(restify.plugins.bodyParser({ mapParams: true }));
 
         // Add routes routes
-        routes(this.server, this.oblecto);
+        routes(this.server, this.owoblecto);
 
         // Start restify server
-        this.server.listen(this.oblecto.config.server.port,  () => {
+        this.server.listen(this.owoblecto.config.server.port,  () => {
             logger.log('INFO', this.server.name, 'REST API Listening at', this.server.url);
         });
     }

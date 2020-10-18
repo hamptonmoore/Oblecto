@@ -4,10 +4,10 @@ import {Episode} from '../../../models/episode';
 export default class SeriesUpdateCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -16,7 +16,7 @@ export default class SeriesUpdateCollector {
      * @returns {Promise<void>}
      */
     async collectEpisode(episode) {
-        this.oblecto.queue.queueJob('updateEpisode', episode);
+        this.owoblecto.queue.queueJob('updateEpisode', episode);
     }
 
     /**
@@ -25,7 +25,7 @@ export default class SeriesUpdateCollector {
      * @returns {Promise<void>}
      */
     async collectSeries(series) {
-        this.oblecto.queue.queueJob('updateSeries', series);
+        this.owoblecto.queue.queueJob('updateSeries', series);
     }
 
     /**

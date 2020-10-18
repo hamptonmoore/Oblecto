@@ -4,10 +4,10 @@ import path from 'path';
 export default class MovieCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -31,8 +31,8 @@ export default class MovieCollector {
     async collectFile(file) {
         let extension = path.parse(file).ext.toLowerCase();
 
-        if (this.oblecto.config.fileExtensions.video.indexOf(extension) !== -1) {
-            this.oblecto.queue.queueJob('indexMovie',{path: file});
+        if (this.owoblecto.config.fileExtensions.video.indexOf(extension) !== -1) {
+            this.owoblecto.queue.queueJob('indexMovie',{path: file});
         }
     }
 
@@ -41,7 +41,7 @@ export default class MovieCollector {
      * @returns {Promise<void>}
      */
     async collectAll() {
-        this.oblecto.config.movies.directories.forEach(directory => {
+        this.owoblecto.config.movies.directories.forEach(directory => {
             this.collectDirectory(directory.path);
         });
     }

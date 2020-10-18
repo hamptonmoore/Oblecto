@@ -2,11 +2,11 @@ import tls from 'tls';
 import fs from 'fs';
 
 export default class FederationServer {
-    constructor(oblecto, port) {
-        this.oblecto = oblecto;
+    constructor(owoblecto, port) {
+        this.owoblecto = owoblecto;
 
         let options = {
-            key: fs.readFileSync(this.oblecto.config.federation.key),
+            key: fs.readFileSync(this.owoblecto.config.federation.key),
             cert: fs.readFileSync('/etc/oblecto/keys/public-cert.pem'),
         };
 

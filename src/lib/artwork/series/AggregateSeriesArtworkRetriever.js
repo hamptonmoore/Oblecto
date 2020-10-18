@@ -2,8 +2,8 @@ import WarnExtendableError from '../../errors/WarnExtendableError';
 import logger from '../../../submodules/logger';
 
 export default class AggregateSeriesArtworkRetriever {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         this.retrievers = [];
     }

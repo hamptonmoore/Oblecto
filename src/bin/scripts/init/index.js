@@ -1,8 +1,8 @@
 export default async (args) => {
-    if (args.length === 1) args[1] = 'oblecto';
+    if (args.length === 1) args[1] = 'owoblecto';
 
     switch (args[1]) {
-        case 'oblecto':
+        case 'owoblecto':
             await require('./general').default(args);
             break;
         case 'database':

@@ -1,5 +1,5 @@
 export default class MediaIdentifier {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 }

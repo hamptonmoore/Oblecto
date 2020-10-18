@@ -6,7 +6,7 @@ import { ConfigManager } from '../../../../config';
 
 
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     // API Endpoint to request a re-index of certain library types
     server.get('/sources/:type', authMiddleWare.requiresAuth, function (req, res, next) {
 
@@ -14,7 +14,7 @@ export default (server, oblecto) => {
             return next(new errors.BadRequestError('Source type does not exist'));
         }
 
-        res.send(oblecto.config[req.params.type].directories || {});
+        res.send(owoblecto.config[req.params.type].directories || {});
     });
 
     server.put('/sources/:type', authMiddleWare.requiresAuth, function (req, res, next) {
@@ -27,7 +27,7 @@ export default (server, oblecto) => {
             return next(new errors.BadRequestError('No path specified'));
         }
 
-        oblecto.config[req.params.type].directories.push({
+        owoblecto.config[req.params.type].directories.push({
             path: req.params.path
         });
 
@@ -46,9 +46,9 @@ export default (server, oblecto) => {
             return next(new errors.BadRequestError('No path specified'));
         }
 
-        oblecto.config[req.params.type].directories.forEach((v, i) => {
+        owoblecto.config[req.params.type].directories.forEach((v, i) => {
             if (v.path === req.params.path) {
-                delete oblecto.config[req.params.type].directories.splice(i, 1);
+                delete owoblecto.config[req.params.type].directories.splice(i, 1);
             }
         });
 

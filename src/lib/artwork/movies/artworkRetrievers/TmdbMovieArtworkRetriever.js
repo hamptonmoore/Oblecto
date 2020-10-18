@@ -1,14 +1,14 @@
 import DebugExtendableError from '../../../errors/DebugExtendableError';
 
 export default class TmdbMovieArtworkRetriever {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     async retrieveFanart(movie) {
         if (!movie.tmdbid) throw new DebugExtendableError(`No tmdbid id found for movie ${movie.movieName}`);
 
-        let data = await this.oblecto.tmdb.movieImages({
+        let data = await this.owoblecto.tmdb.movieImages({
             id: movie.tmdbid
         });
 
@@ -18,7 +18,7 @@ export default class TmdbMovieArtworkRetriever {
     async retrievePoster(movie) {
         if (!movie.tmdbid) throw new DebugExtendableError(`No tmdbid id found for movie ${movie.movieName}`);
 
-        let data = await this.oblecto.tmdb.movieImages({
+        let data = await this.owoblecto.tmdb.movieImages({
             id: movie.tmdbid
         });
 

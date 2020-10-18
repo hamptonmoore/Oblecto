@@ -7,15 +7,15 @@ import HLSStreamer from '../../../lib/streamSessions/StreamSessionTypes/HLSStrea
 /**
  *
  * @param {Server} server
- * @param {Oblecto} oblecto
+ * @param {owoblecto} owoblecto
  */
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.get('/HLS/:sessionId/segment/:id', async function (req, res, next) {
-        if (!oblecto.streamSessionController.sessionExists(req.params.sessionId)) {
+        if (!owoblecto.streamSessionController.sessionExists(req.params.sessionId)) {
             return next(new errors.InvalidCredentialsError('Stream session token does not exist'));
         }
 
-        let streamSession = oblecto.streamSessionController.sessions[req.params.sessionId];
+        let streamSession = owoblecto.streamSessionController.sessions[req.params.sessionId];
 
         // TODO: Send approriate error if session is not a HLS stream session
         if (!(streamSession instanceof HLSStreamer)) return next();
@@ -26,11 +26,11 @@ export default (server, oblecto) => {
     });
 
     server.get('/HLS/:sessionId/playlist', async function (req, res, next) {
-        if (!oblecto.streamSessionController.sessionExists(req.params.sessionId)) {
+        if (!owoblecto.streamSessionController.sessionExists(req.params.sessionId)) {
             return next(new errors.InvalidCredentialsError('Stream session token does not exist'));
         }
 
-        let streamSession = oblecto.streamSessionController.sessions[req.params.sessionId];
+        let streamSession = owoblecto.streamSessionController.sessions[req.params.sessionId];
 
         // TODO: Send approriate error if session is not a HLS stream session
         if (!(streamSession instanceof HLSStreamer)) return next(new errors.InvalidContentError('Not a HLS stream'));
@@ -57,7 +57,7 @@ export default (server, oblecto) => {
 
         if (req.params.noremux) streamType = 'directhttp';
 
-        let streamSession = oblecto.streamSessionController.newSession(file, {
+        let streamSession = owoblecto.streamSessionController.newSession(file, {
             streamType,
 
             target: {
@@ -76,15 +76,15 @@ export default (server, oblecto) => {
     });
 
     server.get('/session/stream/:sessionId', async function (req, res, next) {
-        if (!oblecto.streamSessionController.sessionExists(req.params.sessionId)) {
+        if (!owoblecto.streamSessionController.sessionExists(req.params.sessionId)) {
             return next(new errors.InvalidCredentialsError('Stream session token does not exist'));
         }
 
         return next();
     }, async function (req, res, next) {
-        oblecto.streamSessionController.sessions[req.params.sessionId].offset = req.params.offset || 0;
+        owoblecto.streamSessionController.sessions[req.params.sessionId].offset = req.params.offset || 0;
 
-        await oblecto.streamSessionController.sessions[req.params.sessionId].addDestination({
+        await owoblecto.streamSessionController.sessions[req.params.sessionId].addDestination({
             request: req,
             stream: res,
 
@@ -93,6 +93,6 @@ export default (server, oblecto) => {
 
         if (req.params.nostart) return;
 
-        await oblecto.streamSessionController.sessions[req.params.sessionId].startStream();
+        await owoblecto.streamSessionController.sessions[req.params.sessionId].startStream();
     });
 };

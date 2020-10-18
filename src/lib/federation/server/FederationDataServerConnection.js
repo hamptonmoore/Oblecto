@@ -5,8 +5,8 @@ import {Episode} from '../../../models/episode';
 import {Series} from '../../../models/series';
 
 export default class FederationDataServerConnection extends FederationServerConnection {
-    constructor(oblecto, socket) {
-        super(oblecto, socket);
+    constructor(owoblecto, socket) {
+        super(owoblecto, socket);
         this.fullSyncPermitted = true;
     }
 

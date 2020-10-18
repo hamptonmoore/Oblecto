@@ -4,10 +4,10 @@ import path from 'path';
 export default class SeriesCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -31,8 +31,8 @@ export default class SeriesCollector {
     async collectFile(file) {
         let extension = path.parse(file).ext.toLowerCase();
 
-        if (this.oblecto.config.fileExtensions.video.indexOf(extension) !== -1) {
-            this.oblecto.queue.queueJob('indexEpisode',{path: file});
+        if (this.owoblecto.config.fileExtensions.video.indexOf(extension) !== -1) {
+            this.owoblecto.queue.queueJob('indexEpisode',{path: file});
         }
     }
 
@@ -41,7 +41,7 @@ export default class SeriesCollector {
      * @returns {Promise<void>}
      */
     async collectAll() {
-        this.oblecto.config.tvshows.directories.forEach(directory => {
+        this.owoblecto.config.tvshows.directories.forEach(directory => {
             this.collectDirectory(directory.path);
         });
     }

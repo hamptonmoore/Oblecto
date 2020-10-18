@@ -2,8 +2,8 @@ import DebugExtendableError from '../../../errors/DebugExtendableError';
 import axiosTimeout from '../../../../submodules/axiosTimeout';
 
 export default class FanarttvSeriesArtworkRetriever {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     async retrieveSeriesPoster(series) {
@@ -11,7 +11,7 @@ export default class FanarttvSeriesArtworkRetriever {
 
         let {data} = await axiosTimeout({
             method: 'get',
-            url: `http://webservice.fanart.tv/v3/tv/${series.tvdbid}?api_key=${this.oblecto.config['fanart.tv'].key}`
+            url: `http://webservice.fanart.tv/v3/tv/${series.tvdbid}?api_key=${this.owoblecto.config['fanart.tv'].key}`
         });
 
         return data.tvposter[0].url;

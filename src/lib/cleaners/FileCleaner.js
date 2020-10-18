@@ -5,8 +5,8 @@ import {Episode} from '../../models/episode';
 import logger from '../../submodules/logger';
 
 export default class FileCleaner{
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     async removedDeletedFiled () {

@@ -7,6 +7,6 @@ export default async (args) => {
         generateAssetDirectories(config);
     } catch (e) {
         console.log('Could not find config file');
-        console.log('Make sure oblecto has been initialized before regenerating asset directories');
+        console.log('Make sure owoblecto has been initialized before regenerating asset directories');
     }
 };

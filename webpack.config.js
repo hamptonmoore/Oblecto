@@ -16,7 +16,7 @@ module.exports = {
     target: 'node',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'Oblecto.js'
+        filename: 'owoblecto.js'
     },
     externals: nodeModules,
     devtool: 'sourcemap'

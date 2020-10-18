@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if [ ! -d "/etc/oblecto" ]; then
-  sudo mkdir /etc/oblecto
-  sudo chown $(whoami) /etc/oblecto
+if [ ! -d "/etc/owoblecto" ]; then
+  sudo mkdir /etc/owoblecto
+  sudo chown $(whoami) /etc/owoblecto
 
-  dist/bin/oblecto.js init
-  dist/bin/oblecto.js init database
+  dist/bin/owoblecto.js init
+  dist/bin/owoblecto.js init database
 fi
 
 node tests/startup.js

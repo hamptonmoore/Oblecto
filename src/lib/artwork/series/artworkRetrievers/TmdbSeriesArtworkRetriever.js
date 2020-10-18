@@ -1,8 +1,8 @@
 import DebugExtendableError from '../../../errors/DebugExtendableError';
 
 export default class TmdbSeriesArtworkRetriever {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -15,7 +15,7 @@ export default class TmdbSeriesArtworkRetriever {
 
         let series = await episode.getSeries();
 
-        let data = await this.oblecto.tmdb.episodeImages({
+        let data = await this.owoblecto.tmdb.episodeImages({
             id: series.tmdbid,
             episode_number: episode.airedEpisodeNumber,
             season_number: episode.airedSeason
@@ -32,7 +32,7 @@ export default class TmdbSeriesArtworkRetriever {
     async retrieveSeriesPoster(series) {
         if (!series.tmdbid) throw new DebugExtendableError(`TMDB Series poster retriever failed for ${series.seriesName}`);
 
-        let data = await this.oblecto.tmdb.tvImages({
+        let data = await this.owoblecto.tmdb.tvImages({
             id: series.tmdbid
         });
 

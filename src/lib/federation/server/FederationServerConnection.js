@@ -3,8 +3,8 @@ import {promises as fs} from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
 export default class FederationServerConnection {
-    constructor(oblecto, socket) {
-        this.oblecto = oblecto;
+    constructor(owoblecto, socket) {
+        this.owoblecto = owoblecto;
         this.socket = socket;
         this.socket.on('data', chunk => this.dataHandler(chunk));
         this.socket.on('close', () => this.closeHandler());
@@ -53,9 +53,9 @@ export default class FederationServerConnection {
 
         // Check if the client server is known
         // If an unknown client is trying to connect, we should just ignore it
-        if (!this.oblecto.config.federation.clients[clientId]) return;
+        if (!this.owoblecto.config.federation.clients[clientId]) return;
 
-        let key = await fs.readFile(this.oblecto.config.federation.clients[clientId].key);
+        let key = await fs.readFile(this.owoblecto.config.federation.clients[clientId].key);
         this.key = NodeRSA(key);
 
         this.write('CHALLENGE', this.key.encrypt(this.challenge, 'base64'));

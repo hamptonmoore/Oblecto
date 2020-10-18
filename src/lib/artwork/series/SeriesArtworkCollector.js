@@ -6,10 +6,10 @@ import {Series} from '../../../models/series';
 export default class SeriesArtworkCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -21,12 +21,12 @@ export default class SeriesArtworkCollector {
         let stat;
 
         try {
-            stat = await fs.stat(this.oblecto.artworkUtils.episodeBannerPath(episode));
+            stat = await fs.stat(this.owoblecto.artworkUtils.episodeBannerPath(episode));
         } catch (e) {}
 
         if (stat) return;
 
-        this.oblecto.queue.queueJob('downloadEpisodeBanner', episode);
+        this.owoblecto.queue.queueJob('downloadEpisodeBanner', episode);
     }
 
     /**
@@ -38,12 +38,12 @@ export default class SeriesArtworkCollector {
         let stat;
 
         try {
-            stat = await fs.stat(this.oblecto.artworkUtils.seriesPosterPath(series));
+            stat = await fs.stat(this.owoblecto.artworkUtils.seriesPosterPath(series));
         } catch (e) {}
 
         if (stat) return;
 
-        this.oblecto.queue.queueJob('downloadSeriesPoster', series);
+        this.owoblecto.queue.queueJob('downloadSeriesPoster', series);
     }
 
     /**

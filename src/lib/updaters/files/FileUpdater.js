@@ -7,28 +7,28 @@ import VideoAnalysisError from '../../errors/VideoAnalysisError';
 export default class FileUpdater {
 
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
-        this.oblecto.queue.addJob('updateFile', async (file) => {
+        this.owoblecto.queue.addJob('updateFile', async (file) => {
             await this.updateFile(file);
         });
 
-        this.oblecto.queue.addJob('updateFileHash', async (file) => {
+        this.owoblecto.queue.addJob('updateFileHash', async (file) => {
             await this.updateFileHash(file);
         });
 
-        this.oblecto.queue.addJob('updateFileSize', async (file) => {
+        this.owoblecto.queue.addJob('updateFileSize', async (file) => {
             await this.updateFileSize(file);
         });
 
-        this.oblecto.queue.addJob('updateFileExtension', async (file) => {
+        this.owoblecto.queue.addJob('updateFileExtension', async (file) => {
             await this.updateFileExtension(file);
         });
 
-        this.oblecto.queue.addJob('updateFileFFProbe', async (file) => {
+        this.owoblecto.queue.addJob('updateFileFFProbe', async (file) => {
             await this.updateFileFFProbe(file);
         });
     }
@@ -71,20 +71,20 @@ export default class FileUpdater {
      * @returns {Promise<void>}
      */
     async updateFile(file) {
-        if (this.oblecto.config.files.doHash && !file.hash) {
-            this.oblecto.queue.queueJob('updateFileHash', file);
+        if (this.owoblecto.config.files.doHash && !file.hash) {
+            this.owoblecto.queue.queueJob('updateFileHash', file);
         }
 
         if (!file.size || file.size === 0) {
-            this.oblecto.queue.queueJob('updateFileSize', file);
+            this.owoblecto.queue.queueJob('updateFileSize', file);
         }
 
         if (file.extension.includes('.')) {
-            this.oblecto.queue.queueJob('updateFileExtension', file);
+            this.owoblecto.queue.queueJob('updateFileExtension', file);
         }
 
         if (!file.duration || file.duration === 0) {
-            this.oblecto.queue.queueJob('updateFileFFProbe', file);
+            this.owoblecto.queue.queueJob('updateFileFFProbe', file);
         }
     }
 

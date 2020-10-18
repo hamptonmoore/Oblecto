@@ -3,10 +3,10 @@ import {File} from '../../../models/file';
 export default class FileUpdateCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -15,7 +15,7 @@ export default class FileUpdateCollector {
      * @returns {Promise<void>}
      */
     async collectFile(file) {
-        this.oblecto.queue.queueJob('updateFile', file);
+        this.owoblecto.queue.queueJob('updateFile', file);
     }
 
     /**

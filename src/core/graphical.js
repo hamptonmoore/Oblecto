@@ -1,12 +1,12 @@
 import blessed from 'neo-blessed';
 
-import Oblecto from '../lib/oblecto';
+import owoblecto from '../lib/owoblecto';
 import config from '../config';
 import logger from '../submodules/logger';
 
 
 export default {
-    oblecto: null,
+    owoblecto: null,
     screen: blessed.screen({
         smartCSR: true
     }),
@@ -94,7 +94,7 @@ export default {
             this.screen.render();
         });
 
-        this.oblecto = new Oblecto(config);
+        this.owoblecto = new owoblecto(config);
 
         this.updater = setInterval(() => {
             this.renderStreamerSessions();
@@ -105,7 +105,7 @@ export default {
     },
 
     close() {
-        this.oblecto.close();
+        this.owoblecto.close();
         clearInterval(this.updater);
         this.screen.destroy();
     },
@@ -113,14 +113,14 @@ export default {
     renderStreamerSessions() {
         this.streamerSessionsBox.clearItems();
 
-        this.streamerSessionsBox.setLabel('Active Streaming Sessions: '+ Object.keys(this.oblecto.streamSessionController.sessions).length);
+        this.streamerSessionsBox.setLabel('Active Streaming Sessions: '+ Object.keys(this.owoblecto.streamSessionController.sessions).length);
 
 
-        for (let sessionId of Object.keys(this.oblecto.streamSessionController.sessions)) {
-            this.streamerSessionsBox.addItem(this.oblecto.streamSessionController.sessions[sessionId].constructor.name + ':');
+        for (let sessionId of Object.keys(this.owoblecto.streamSessionController.sessions)) {
+            this.streamerSessionsBox.addItem(this.owoblecto.streamSessionController.sessions[sessionId].constructor.name + ':');
             this.streamerSessionsBox.addItem(sessionId);
-            this.streamerSessionsBox.addItem(this.oblecto.streamSessionController.sessions[sessionId].file.path);
-            this.streamerSessionsBox.addItem('VideoCodec: ' + this.oblecto.streamSessionController.sessions[sessionId].videoCodec + ', AudioCodec: ' + this.oblecto.streamSessionController.sessions[sessionId].audioCodec + ', Offset:' + this.oblecto.streamSessionController.sessions[sessionId].offset);
+            this.streamerSessionsBox.addItem(this.owoblecto.streamSessionController.sessions[sessionId].file.path);
+            this.streamerSessionsBox.addItem('VideoCodec: ' + this.owoblecto.streamSessionController.sessions[sessionId].videoCodec + ', AudioCodec: ' + this.owoblecto.streamSessionController.sessions[sessionId].audioCodec + ', Offset:' + this.owoblecto.streamSessionController.sessions[sessionId].offset);
             this.streamerSessionsBox.addItem(' ');
         }
     },
@@ -128,9 +128,9 @@ export default {
     renderQueue() {
         this.queueBox.clearItems();
 
-        this.queueBox.setLabel('Queue: '+ this.oblecto.queue.queue._tasks.length);
+        this.queueBox.setLabel('Queue: '+ this.owoblecto.queue.queue._tasks.length);
 
-        for (let i of this.oblecto.queue.queue._tasks) {
+        for (let i of this.owoblecto.queue.queue._tasks) {
             if (i > 100) break;
 
             switch (i.id) {
@@ -162,10 +162,10 @@ export default {
     renderSessions() {
         this.sessionBox.clearItems();
 
-        this.sessionBox.setLabel('Web Socket sessions: '+ Object.keys(this.oblecto.realTimeController.clients).length);
+        this.sessionBox.setLabel('Web Socket sessions: '+ Object.keys(this.owoblecto.realTimeController.clients).length);
 
-        for (let sessionId of Object.keys(this.oblecto.realTimeController.clients)) {
-            let client = this.oblecto.realTimeController.clients[sessionId];
+        for (let sessionId of Object.keys(this.owoblecto.realTimeController.clients)) {
+            let client = this.owoblecto.realTimeController.clients[sessionId];
 
             this.sessionBox.addItem('Session Id: ' + sessionId);
 

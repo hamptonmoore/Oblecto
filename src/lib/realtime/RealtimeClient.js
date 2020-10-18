@@ -6,15 +6,15 @@ import logger from '../../submodules/logger';
 
 export default class RealtimeClient extends events.EventEmitter {
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      * @param {*} socket
      */
-    constructor(oblecto, socket) {
+    constructor(owoblecto, socket) {
         super();
 
         this.clientName = 'default';
 
-        this.oblecto = oblecto;
+        this.owoblecto = owoblecto;
         this.socket = socket;
         this.user = null;
 
@@ -34,7 +34,7 @@ export default class RealtimeClient extends events.EventEmitter {
 
     authenticationHandler(data) {
         try {
-            this.user = jwt.verify(data.token, this.oblecto.config.authentication.secret);
+            this.user = jwt.verify(data.token, this.owoblecto.config.authentication.secret);
         } catch (e) {
             logger.log('WARN', 'An unauthorized user attempted connection to realtime server');
             logger.log('WARN', 'Disconnecting client...');

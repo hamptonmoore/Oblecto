@@ -5,10 +5,10 @@ import logger from '../../submodules/logger';
 
 export default class SeriesCleaner {
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     async removeFileLessEpisodes() {

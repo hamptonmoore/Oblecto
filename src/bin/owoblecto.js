@@ -37,25 +37,25 @@ import {promises as fs} from 'fs';
             break;
 
         default:
-            console.log(`Oblecto ${packageInfo.version}`);
+            console.log(`owoblecto ${packageInfo.version}`);
             console.log();
             console.log('First time setup:');
-            console.log('oblecto init');
-            console.log('oblecto init database');
+            console.log('owoblecto init');
+            console.log('owoblecto init database');
             console.log();
-            console.log('Start oblecto without TUI:');
-            console.log('oblecto start');
-            console.log('Start oblecto with TUI:');
-            console.log('oblecto start-tui');
+            console.log('Start owoblecto without TUI:');
+            console.log('owoblecto start');
+            console.log('Start owoblecto with TUI:');
+            console.log('owoblecto start-tui');
             console.log();
             console.log('User maintenance:');
-            console.log('oblecto adduser USERNAME PASSWORD REALNAME EMAIL');
-            console.log('oblecto deluser USERNAME');
-            console.log('oblecto changepassword USERNAME PASSWORD');
-            console.log('oblecto removepassword USERNAME');
+            console.log('owoblecto adduser USERNAME PASSWORD REALNAME EMAIL');
+            console.log('owoblecto deluser USERNAME');
+            console.log('owoblecto changepassword USERNAME PASSWORD');
+            console.log('owoblecto removepassword USERNAME');
             console.log();
             console.log('Server maintenance:');
-            console.log('oblecto init assets');
+            console.log('owoblecto init assets');
 
     }
 })();

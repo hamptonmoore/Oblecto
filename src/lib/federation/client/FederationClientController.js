@@ -1,20 +1,20 @@
 import FederationDataClient from './FederationDataClient';
 
 export default class FederationClientController{
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         this.syncServers = [];
     }
 
     async addAllSyncMasters () {
-        for (let server in this.oblecto.config.federation.servers) {
+        for (let server in this.owoblecto.config.federation.servers) {
             await this.addSyncMaster(server);
         }
     }
 
     async addSyncMaster (server) {
-        let client = new FederationDataClient(this.oblecto, server);
+        let client = new FederationDataClient(this.owoblecto, server);
         await client.connect();
         await client.requestFullSync();
 

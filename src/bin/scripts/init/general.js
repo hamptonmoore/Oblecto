@@ -7,11 +7,11 @@ export default async (args) => {
     let config = JSON.parse(await fs.readFile(__dirname + '/../../../../res/config.json'));
 
     try {
-        await fs.mkdir('/etc/oblecto');
+        await fs.mkdir('/etc/owoblecto');
     } catch (e) {
         if (e.code !== 'EEXIST') {
-            console.log('Unable to create Oblecto data directory. Aborting');
-            console.log('Please create the directory "/etc/oblecto" and give current user read/write permissions');
+            console.log('Unable to create owoblecto data directory. Aborting');
+            console.log('Please create the directory "/etc/owoblecto" and give current user read/write permissions');
             return;
         }
     }
@@ -38,7 +38,7 @@ export default async (args) => {
     await fs.writeFile('/etc/oblecto/id_rsa.pub', key.exportKey('pkcs1-public-pem'));
 
     console.log('Federation TLS keys will need to be generated manually');
-    console.log('Please refer to the Oblecto wiki for instructions');
-    console.log('https://github.com/robinp7720/Oblecto/wiki/Federation');
+    console.log('Please refer to the owoblecto wiki for instructions');
+    console.log('https://github.com/robinp7720/owoblecto/wiki/Federation');
 
 };

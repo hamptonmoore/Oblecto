@@ -4,10 +4,10 @@ import {Movie} from '../../../models/movie';
 export default class MovieUpdateCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -16,7 +16,7 @@ export default class MovieUpdateCollector {
      * @returns {Promise<void>}
      */
     async collectMovie(movie) {
-        this.oblecto.queue.queueJob('updateMovie', movie);
+        this.owoblecto.queue.queueJob('updateMovie', movie);
     }
 
 

@@ -10,12 +10,12 @@ import {DataTypes} from 'sequelize';
 export default class FileIndexer {
 
     /**
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
-        this.oblecto.queue.addJob('indexFileStreams', this.indexVideoFileStreams);
+        this.owoblecto.queue.addJob('indexFileStreams', this.indexVideoFileStreams);
     }
 
     async indexVideoFile(videoPath) {
@@ -35,9 +35,9 @@ export default class FileIndexer {
             throw new FileExistsError(`${videoPath} is already in the file database`);
         }
 
-        this.oblecto.queue.queueJob('indexFileStreams', file);
+        this.owoblecto.queue.queueJob('indexFileStreams', file);
 
-        await this.oblecto.fileUpdateCollector.collectFile(file);
+        await this.owoblecto.fileUpdateCollector.collectFile(file);
 
         return file;
     }

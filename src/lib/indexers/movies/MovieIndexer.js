@@ -6,21 +6,21 @@ import { Movie } from '../../../models/movie';
 export default class MovieIndexer {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         this.movieIdentifer = new AggregateIdentifier();
 
-        this.movieIdentifer.loadIdentifier(new TmdbMovieIdentifier(this.oblecto));
+        this.movieIdentifer.loadIdentifier(new TmdbMovieIdentifier(this.owoblecto));
 
-        // Register task availability to Oblecto queue
-        this.oblecto.queue.addJob('indexMovie', async (job) => await this.indexFile(job.path, job.doReIndex));
+        // Register task availability to owoblecto queue
+        this.owoblecto.queue.addJob('indexMovie', async (job) => await this.indexFile(job.path, job.doReIndex));
     }
 
     async indexFile(moviePath) {
-        let file = await this.oblecto.fileIndexer.indexVideoFile(moviePath);
+        let file = await this.owoblecto.fileIndexer.indexVideoFile(moviePath);
 
         let movieIdentification = await this.movieIdentifer.identify(moviePath);
 
@@ -36,8 +36,8 @@ export default class MovieIndexer {
 
         if (!movieCreated) return;
 
-        this.oblecto.queue.queueJob('updateMovie', movie);
-        this.oblecto.queue.queueJob('downloadMovieFanart', movie);
-        this.oblecto.queue.pushJob('downloadMoviePoster', movie);
+        this.owoblecto.queue.queueJob('updateMovie', movie);
+        this.owoblecto.queue.queueJob('downloadMovieFanart', movie);
+        this.owoblecto.queue.pushJob('downloadMoviePoster', movie);
     }
 }

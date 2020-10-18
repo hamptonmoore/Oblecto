@@ -35,7 +35,7 @@
     "host": "localhost",
     "username": "root",
     "password": "root",
-    "database": "Oblecto"
+    "database": "owoblecto"
   },
   "server": {
     "port": 8080
@@ -105,9 +105,9 @@
     "mediaPort": 9132,
     "enable": false,
     "servers": {
-      "oblecto": {
+      "owoblecto": {
         "address": "88.153.83.155",
-        "ca": "/etc/oblecto/keys/oblecto.pem",
+        "ca": "/etc/oblecto/keys/owoblecto.pem",
         "dataPort": 9131,
         "mediaPort": 9132
       }

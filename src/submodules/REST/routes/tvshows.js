@@ -12,7 +12,7 @@ import {TrackEpisode} from '../../../models/trackEpisode';
 
 const Op = sequelize.Op;
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.get('/series/list/:sorting', authMiddleWare.requiresAuth, async function (req, res, next) {
         let limit = 20;
         let page = 0;
@@ -83,7 +83,7 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Series does not exist'));
         }
 
-        let imagePath = oblecto.artworkUtils.seriesPosterPath(show, req.params.size || 'medium');
+        let imagePath = owoblecto.artworkUtils.seriesPosterPath(show, req.params.size || 'medium');
 
         fs.createReadStream(imagePath)
             .on('error', ()  => {
@@ -99,9 +99,9 @@ export default (server, oblecto) => {
             return next(new errors.NotFoundError('Movie does not exist'));
         }
 
-        let posterPath = path.normalize(oblecto.config.assets.showPosterLocation) + '/' + show.id + '.jpg';
+        let posterPath = path.normalize(owoblecto.config.assets.showPosterLocation) + '/' + show.id + '.jpg';
 
-        if (oblecto.config.assets.storeWithFile) {
+        if (owoblecto.config.assets.storeWithFile) {
             let showPath = show.directory;
             posterPath = path.join(showPath, show.seriesName + '-poster.jpg');
         }

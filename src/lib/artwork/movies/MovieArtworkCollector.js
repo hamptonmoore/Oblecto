@@ -4,10 +4,10 @@ import {Movie} from '../../../models/movie';
 export default class MovieArtworkCollector {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -19,12 +19,12 @@ export default class MovieArtworkCollector {
         let stat;
 
         try {
-            stat = await fs.stat(this.oblecto.artworkUtils.movieFanartPath(movie));
+            stat = await fs.stat(this.owoblecto.artworkUtils.movieFanartPath(movie));
         } catch (e) {}
 
         if (stat) return;
 
-        this.oblecto.queue.queueJob('downloadMovieFanart', movie);
+        this.owoblecto.queue.queueJob('downloadMovieFanart', movie);
     }
 
     /**
@@ -36,12 +36,12 @@ export default class MovieArtworkCollector {
         let stat;
 
         try {
-            stat = await fs.stat(this.oblecto.artworkUtils.moviePosterPath(movie));
+            stat = await fs.stat(this.owoblecto.artworkUtils.moviePosterPath(movie));
         } catch (e) {}
 
         if (stat) return;
 
-        this.oblecto.queue.queueJob('downloadMoviePoster', movie);
+        this.owoblecto.queue.queueJob('downloadMoviePoster', movie);
     }
 
     /**

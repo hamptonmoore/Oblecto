@@ -8,14 +8,14 @@ export default class StreamSession extends events.EventEmitter{
      *
      * @param {File} file
      * @param options
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(file, options, oblecto) {
+    constructor(file, options, owoblecto) {
         super();
 
         logger.log('INFO', 'New StreamSession initiating');
 
-        this.oblecto = oblecto;
+        this.owoblecto = owoblecto;
 
         this.file = file;
         this.sessionId = v4();
@@ -126,14 +126,14 @@ export default class StreamSession extends events.EventEmitter{
     getFfmpegVideoCodec() {
         let codec = this.videoCodec;
 
-        if (this.oblecto.config.transcoding.hardwareAcceleration) {
-            if (this.oblecto.config.transcoding.hardwareAccelerator === 'cuda') {
+        if (this.owoblecto.config.transcoding.hardwareAcceleration) {
+            if (this.owoblecto.config.transcoding.hardwareAccelerator === 'cuda') {
                 if (codec === 'h264'){
                     return 'h264_nvenc';
                 }
             }
 
-            if (this.oblecto.config.transcoding.hardwareAccelerator === 'vaapi') {
+            if (this.owoblecto.config.transcoding.hardwareAccelerator === 'vaapi') {
                 if (codec === 'h264'){
                     return 'h264_vaapi';
                 }

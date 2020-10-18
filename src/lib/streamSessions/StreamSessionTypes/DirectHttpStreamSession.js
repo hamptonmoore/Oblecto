@@ -5,8 +5,8 @@ import logger from '../../../submodules/logger';
 import {File} from '../../../models/file';
 
 export default class DirectHttpStreamSession extends StreamSession {
-    constructor(file, options, oblecto) {
-        super(file, options, oblecto);
+    constructor(file, options, owoblecto) {
+        super(file, options, owoblecto);
 
         this.format = this.file.extension;
         this.videoCodec = this.file.videoCodec;

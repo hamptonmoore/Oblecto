@@ -11,26 +11,26 @@ import { Episode } from '../../../models/episode';
 export default class SeriesIndexer {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
         this.seriesIdentifier = new AggregateIdentifier();
         this.episodeIdentifer = new AggregateIdentifier();
 
         //this.seriesIdentifier.loadIdentifier(new TvdbSeriesIdentifier());
-        this.seriesIdentifier.loadIdentifier(new TmdbSeriesIdentifier(this.oblecto));
+        this.seriesIdentifier.loadIdentifier(new TmdbSeriesIdentifier(this.owoblecto));
 
         //this.episodeIdentifer.loadIdentifier(new TvdbEpisodeIdentifier());
-        this.episodeIdentifer.loadIdentifier(new TmdbEpisodeIdentifier(this.oblecto));
+        this.episodeIdentifer.loadIdentifier(new TmdbEpisodeIdentifier(this.owoblecto));
 
-        // Register task availability to Oblecto queue
-        this.oblecto.queue.addJob('indexEpisode', async (job) => await this.indexFile(job.path));
+        // Register task availability to owoblecto queue
+        this.owoblecto.queue.addJob('indexEpisode', async (job) => await this.indexFile(job.path));
     }
 
     async indexFile(episodePath) {
-        let file = await this.oblecto.fileIndexer.indexVideoFile(episodePath);
+        let file = await this.owoblecto.fileIndexer.indexVideoFile(episodePath);
 
         let seriesIdentification = await this.seriesIdentifier.identify(episodePath);
         let episodeIdentification = await this.episodeIdentifer.identify(episodePath, seriesIdentification);
@@ -71,13 +71,13 @@ export default class SeriesIndexer {
         await episode.addFile(file);
 
         if (episodeCreated) {
-            this.oblecto.queue.pushJob('updateEpisode', episode);
-            this.oblecto.queue.pushJob('downloadEpisodeBanner', episode);
+            this.owoblecto.queue.pushJob('updateEpisode', episode);
+            this.owoblecto.queue.pushJob('downloadEpisodeBanner', episode);
         }
 
         if (seriesCreated) {
-            this.oblecto.queue.pushJob('updateSeries', series);
-            this.oblecto.queue.pushJob('downloadSeriesPoster', series);
+            this.owoblecto.queue.pushJob('updateSeries', series);
+            this.owoblecto.queue.pushJob('downloadSeriesPoster', series);
         }
     }
 

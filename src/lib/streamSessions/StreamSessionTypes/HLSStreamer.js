@@ -7,8 +7,8 @@ import { promises as pfs } from 'fs';
 import DirectHttpStreamSession from './DirectHttpStreamSession';
 
 export default class HLSStreamer extends StreamSession {
-    constructor(file, options, oblecto) {
-        super(file, options, oblecto);
+    constructor(file, options, owoblecto) {
+        super(file, options, owoblecto);
 
         this.timeoutTime = 10000;
         this.paused = true;
@@ -25,7 +25,7 @@ export default class HLSStreamer extends StreamSession {
         this.startTimeout();
 
         // Create temporary directory to store HLS segments
-        mkdirp.sync(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}`);
+        mkdirp.sync(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}`);
 
         this.process = ffmpeg(this.file.path)
             //.native()
@@ -38,7 +38,7 @@ export default class HLSStreamer extends StreamSession {
                 //'-hls_init_time 2',
                 '-hls_playlist_type event',
                 '-hls_base_url', `/HLS/${this.sessionId}/segment/`,
-                '-hls_segment_filename', `${os.tmpdir()}/oblecto/sessions/${this.sessionId}/%03d.ts`,
+                '-hls_segment_filename', `${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/%03d.ts`,
             ]);
 
         this.process.on('start', cmd => this.segmenterStart(cmd));
@@ -53,7 +53,7 @@ export default class HLSStreamer extends StreamSession {
         super.endSession();
         clearInterval(this.segmentCheckerInterval);
 
-        await pfs.rmdir(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}/`, {recursive: true});
+        await pfs.rmdir(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/`, {recursive: true});
     }
 
     segmenterStart(cmd) {
@@ -61,13 +61,13 @@ export default class HLSStreamer extends StreamSession {
     }
 
     startSegmenter() {
-        this.process.save(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}/index.m3u8`);
+        this.process.save(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/index.m3u8`);
     }
 
     async segmentChecker() {
         if (!this.process) return;
 
-        let files = await pfs.readdir(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}/`);
+        let files = await pfs.readdir(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/`);
 
         const segments = files.filter(s => s.includes('.ts'));
 
@@ -103,15 +103,15 @@ export default class HLSStreamer extends StreamSession {
             'Content-Type': 'application/x-mpegURL'
         });
 
-        fs.createReadStream(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}/index.m3u8`).pipe(res);
+        fs.createReadStream(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/index.m3u8`).pipe(res);
     }
 
     async streamSegment(req, res, segmentId) {
         this.startTimeout();
 
-        DirectHttpStreamSession.httpStreamHandler(req, res, `${os.tmpdir()}/oblecto/sessions/${this.sessionId}/${('000' + segmentId).substr(-3)}.ts`);
+        DirectHttpStreamSession.httpStreamHandler(req, res, `${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/${('000' + segmentId).substr(-3)}.ts`);
 
-        let files = await pfs.readdir(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}/`);
+        let files = await pfs.readdir(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/`);
 
         for (let file of files) {
             let sequenceId = file.replace('index', '')
@@ -121,7 +121,7 @@ export default class HLSStreamer extends StreamSession {
             sequenceId = parseInt(sequenceId);
 
             if (segmentId > sequenceId) {
-                await pfs.unlink(`${os.tmpdir()}/oblecto/sessions/${this.sessionId}/${file}`);
+                await pfs.unlink(`${os.tmpdir()}/owoblecto/sessions/${this.sessionId}/${file}`);
             }
         }
     }

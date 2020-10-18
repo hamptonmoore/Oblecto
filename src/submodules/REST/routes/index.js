@@ -12,18 +12,18 @@ import clients from './clients';
 import config from '../../../config';
 
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     if (config.web.enabled) {
-        web(server, oblecto);
+        web(server, owoblecto);
     }
 
-    auth(server, oblecto);
-    episodes(server, oblecto);
-    files(server, oblecto);
-    movies(server, oblecto);
-    tvshows(server, oblecto);
-    settings(server, oblecto);
-    users(server, oblecto);
-    sets(server, oblecto);
-    clients(server, oblecto);
+    auth(server, owoblecto);
+    episodes(server, owoblecto);
+    files(server, owoblecto);
+    movies(server, owoblecto);
+    tvshows(server, owoblecto);
+    settings(server, owoblecto);
+    users(server, owoblecto);
+    sets(server, owoblecto);
+    clients(server, owoblecto);
 };

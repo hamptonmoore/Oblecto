@@ -1,6 +1,6 @@
 export default class TmdbSeriesRetriever {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
     }
 
     /**
@@ -9,7 +9,7 @@ export default class TmdbSeriesRetriever {
      * @returns {Promise<{overview: *, siteRating: *, seriesName: *, firstAired: *, popularity: *, siteRatingCount: *, status: *}>}
      */
     async retrieveInformation(series) {
-        let seriesInfo = await this.oblecto.tmdb.tvInfo({ id: series.tmdbid });
+        let seriesInfo = await this.owoblecto.tmdb.tvInfo({ id: series.tmdbid });
 
         let data = {
             seriesName: seriesInfo.name,
@@ -31,7 +31,7 @@ export default class TmdbSeriesRetriever {
         let externalIds = {};
 
         if (!(series.tvdbid && series.imdbid)) {
-            externalIds = await this.oblecto.tmdb.tvExternalIds({id: series.tmdbid});
+            externalIds = await this.owoblecto.tmdb.tvExternalIds({id: series.tmdbid});
         }
 
         if (!series.tvdbid) {

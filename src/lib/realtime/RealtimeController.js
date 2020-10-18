@@ -4,13 +4,13 @@ import RealtimeClient from './RealtimeClient';
 export default class RealtimeController {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      */
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
         this.clients = {};
 
-        this.server = socketio.listen(oblecto.oblectoAPI.server.server, {
+        this.server = socketio.listen(owoblecto.owoblectoAPI.server.server, {
             log: false,
             agent: false,
             origins: '*:*',
@@ -23,7 +23,7 @@ export default class RealtimeController {
     }
 
     connectionHandler(socket) {
-        this.clients[socket.id] = new RealtimeClient(this.oblecto, socket);
+        this.clients[socket.id] = new RealtimeClient(this.owoblecto, socket);
         this.clients[socket.id].on('disconnect', () => {
             delete this.clients[socket.id];
         });

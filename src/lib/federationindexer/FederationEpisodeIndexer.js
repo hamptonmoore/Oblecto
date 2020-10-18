@@ -3,11 +3,11 @@ import {Episode} from '../../models/episode';
 import {File} from '../../models/file';
 
 export default class FederationEpisodeIndexer {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
-        // Register task availability to Oblecto queue
-        this.oblecto.queue.addJob('federationIndexEpisode', async (job) => {
+        // Register task availability to owoblecto queue
+        this.owoblecto.queue.addJob('federationIndexEpisode', async (job) => {
             await this.indexEpisode(job);
         });
     }
@@ -48,12 +48,12 @@ export default class FederationEpisodeIndexer {
         await episode.addFile(fileEntity);
 
         if (!episodeInserted) return;
-        await this.oblecto.seriesUpdateCollector.collectEpisode(episode);
-        await this.oblecto.seriesArtworkCollector.collectArtworkEpisodeBanner(episode);
+        await this.owoblecto.seriesUpdateCollector.collectEpisode(episode);
+        await this.owoblecto.seriesArtworkCollector.collectArtworkEpisodeBanner(episode);
 
         if (!seriesInserted) return;
-        await this.oblecto.seriesUpdateCollector.collectSeries(series);
-        await this.oblecto.seriesArtworkCollector.collectArtworkSeriesPoster(series);
+        await this.owoblecto.seriesUpdateCollector.collectSeries(series);
+        await this.owoblecto.seriesArtworkCollector.collectArtworkSeriesPoster(series);
 
     }
 }

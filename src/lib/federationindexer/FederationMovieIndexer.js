@@ -2,11 +2,11 @@ import {File} from '../../models/file';
 import {Movie} from '../../models/movie';
 
 export default class FederationMovieIndexer {
-    constructor(oblecto) {
-        this.oblecto = oblecto;
+    constructor(owoblecto) {
+        this.owoblecto = owoblecto;
 
-        // Register task availability to Oblecto queue
-        this.oblecto.queue.addJob('federationIndexMovie', async (job) => {
+        // Register task availability to owoblecto queue
+        this.owoblecto.queue.addJob('federationIndexMovie', async (job) => {
             await this.indexMovie(job);
         });
     }
@@ -35,9 +35,9 @@ export default class FederationMovieIndexer {
 
         if (!movieInserted) return;
 
-        await this.oblecto.movieUpdateCollector.collectMovie(movie);
-        await this.oblecto.movieArtworkCollector.collectArtworkMovieFanart(movie);
-        await this.oblecto.movieArtworkCollector.collectArtworkMoviePoster(movie);
+        await this.owoblecto.movieUpdateCollector.collectMovie(movie);
+        await this.owoblecto.movieArtworkCollector.collectArtworkMovieFanart(movie);
+        await this.owoblecto.movieArtworkCollector.collectArtworkMoviePoster(movie);
 
     }
 }

@@ -3,14 +3,14 @@ import authMiddleWare from '../middleware/auth';
 /**
  *
  * @param {Server} server
- * @param {Oblecto} oblecto
+ * @param {owoblecto} owoblecto
  */
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.get('/clients', authMiddleWare.requiresAuth, async function (req, res, next) {
         let clients = [];
 
-        for (let clientId in oblecto.realTimeController.clients) {
-            let client = oblecto.realTimeController.clients[clientId];
+        for (let clientId in owoblecto.realTimeController.clients) {
+            let client = owoblecto.realTimeController.clients[clientId];
 
             if (client.user.id === req.authorization.user.id) {
                 clients.push({
@@ -27,7 +27,7 @@ export default (server, oblecto) => {
 
     server.post('/client/:clientId/playback', authMiddleWare.requiresAuth, async function (req, res, next) {
         let type = req.params.type;
-        let client = oblecto.realTimeController.clients[req.params.clientId];
+        let client = owoblecto.realTimeController.clients[req.params.clientId];
 
         switch (type) {
             case 'episode':

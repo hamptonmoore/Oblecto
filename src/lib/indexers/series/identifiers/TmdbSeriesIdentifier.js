@@ -3,8 +3,8 @@ import IdentificationError from '../../../errors/IdentificationError';
 import SeriesIdentifer from '../SeriesIdentifer';
 
 export default class TmdbSeriesIdentifier extends SeriesIdentifer {
-    constructor(oblecto) {
-        super(oblecto);
+    constructor(owoblecto) {
+        super(owoblecto);
 
         this.tvShowCache = {};
     }
@@ -33,7 +33,7 @@ export default class TmdbSeriesIdentifier extends SeriesIdentifer {
             return this.tvShowCache[cacheId];
         }
 
-        let tmdbSearch = (await this.oblecto.tmdb.searchTv({query: guessitIdentification.title})).results;
+        let tmdbSearch = (await this.owoblecto.tmdb.searchTv({query: guessitIdentification.title})).results;
 
         if (tmdbSearch.length < 1) {
             throw new IdentificationError();

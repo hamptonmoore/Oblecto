@@ -1,15 +1,15 @@
-import Oblecto from '../lib/oblecto';
+import owoblecto from '../lib/owoblecto';
 import config from '../config';
 
 
 export default {
-    oblecto: new Oblecto(config),
+    owoblecto: new owoblecto(config),
 
     start() {
 
     },
 
     close() {
-        this.oblecto.close();
+        this.owoblecto.close();
     },
 };

@@ -7,7 +7,7 @@ import authMiddleWare from '../middleware/auth';
 import {User} from '../../../models/user';
 
 
-export default (server, oblecto) => {
+export default (server, owoblecto) => {
     server.get('/users', async function (req, res, next) {
         let users = await User.findAll({
             attributes: ['username', 'name', 'email', 'id']
@@ -98,7 +98,7 @@ export default (server, oblecto) => {
         let passwordHash;
 
         if (req.params.password)
-            passwordHash = await bcrypt.hash(req.params.password, oblecto.config.authentication.saltRounds);
+            passwordHash = await bcrypt.hash(req.params.password, owoblecto.config.authentication.saltRounds);
 
         let [user] = await User.findOrCreate({
             where: {

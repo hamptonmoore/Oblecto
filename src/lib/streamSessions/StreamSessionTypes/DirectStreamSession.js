@@ -4,8 +4,8 @@ import fs from 'fs';
 import logger from '../../../submodules/logger';
 
 export default class DirectStreamSession extends StreamSession {
-    constructor(file, options, oblecto) {
-        super(file, options, oblecto);
+    constructor(file, options, owoblecto) {
+        super(file, options, owoblecto);
 
         this.mimeType = mimeTypes.lookup(file.path);
     }

@@ -3,13 +3,13 @@ import FederationClient from './FederationClient';
 export default class FederationDataClient extends FederationClient {
     /**
      *
-     * @param {Oblecto} oblecto
+     * @param {owoblecto} owoblecto
      * @param {string} server
      */
-    constructor(oblecto, server) {
-        super(oblecto, server);
+    constructor(owoblecto, server) {
+        super(owoblecto, server);
 
-        this.port = oblecto.config.federation.servers[server].dataPort;
+        this.port = owoblecto.config.federation.servers[server].dataPort;
     }
 
     headerHandler(data) {
@@ -36,10 +36,10 @@ export default class FederationDataClient extends FederationClient {
 
         switch (file.fileInfo.type) {
             case 'episode':
-                this.oblecto.queue.queueJob('federationIndexEpisode', file);
+                this.owoblecto.queue.queueJob('federationIndexEpisode', file);
                 break;
             case 'movie':
-                this.oblecto.queue.queueJob('federationIndexMovie', file);
+                this.owoblecto.queue.queueJob('federationIndexMovie', file);
                 break;
         }
 

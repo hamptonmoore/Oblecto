@@ -5,8 +5,8 @@ import FederationMediaClient from '../../federation/client/FederationMediaClient
 import logger from '../../../submodules/logger';
 
 export default class RecodeFederationStreamSession extends StreamSession {
-    constructor(file, options, oblecto) {
-        super(file, options, oblecto);
+    constructor(file, options, owoblecto) {
+        super(file, options, owoblecto);
     }
 
     async addDestination(destination) {
@@ -37,13 +37,13 @@ export default class RecodeFederationStreamSession extends StreamSession {
             '-copyts',
         ];
 
-        if (this.oblecto.config.transcoding.hardwareAcceleration) {
-            inputOptions.push('-hwaccel ' + this.oblecto.config.transcoding.hardwareAccelerator);
+        if (this.owoblecto.config.transcoding.hardwareAcceleration) {
+            inputOptions.push('-hwaccel ' + this.owoblecto.config.transcoding.hardwareAccelerator);
 
             // The Nvidia NVENC encoder doesn't support 10 bit encoding, so we need to force 8 bit
             // if the cuda accelerator has been selected
 
-            if (this.oblecto.config.transcoding.hardwareAccelerator === 'cuda') {
+            if (this.owoblecto.config.transcoding.hardwareAccelerator === 'cuda') {
                 outputOptions.push('-pix_fmt yuv420p');
             }
         }
@@ -66,7 +66,7 @@ export default class RecodeFederationStreamSession extends StreamSession {
     }
 
     async initFederationStream() {
-        this.federationClient = new FederationMediaClient(this.oblecto, this.file.host);
+        this.federationClient = new FederationMediaClient(this.owoblecto, this.file.host);
 
         await this.federationClient.connect();
 

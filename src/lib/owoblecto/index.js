@@ -11,7 +11,7 @@ import MovieIndexer from '../indexers/movies/MovieIndexer';
 import SeriesCollector from '../indexers/series/SeriesCollector';
 import MovieCollector from '../indexers/movies/MovieCollector';
 
-import OblectoAPI from '../../submodules/REST';
+import owoblectoAPI from '../../submodules/REST';
 import RealtimeController from '../realtime/RealtimeController';
 
 import ArtworkUtils from '../artwork/ArtworkUtils';
@@ -43,7 +43,7 @@ import FileIndexer from '../indexers/files/FileIndexer';
 import {initDatabes} from '../../submodules/database';
 import StreamSessionController from '../streamSessions/StreamSessionController';
 
-export default class Oblecto {
+export default class owoblecto {
     constructor(config) {
         this.config = config;
 
@@ -54,7 +54,7 @@ export default class Oblecto {
 
         this.queue = new Queue(this.config.queue.concurrency);
 
-        this.oblectoAPI = new OblectoAPI(this);
+        this.owoblectoAPI = new owoblectoAPI(this);
         this.realTimeController = new RealtimeController(this);
 
         this.downloader = new Downloader(this);
